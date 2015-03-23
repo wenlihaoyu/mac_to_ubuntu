@@ -1,0 +1,9 @@
+class asset(object):
+
+
+class basicAsset(asset):
+
+
+
+    
+

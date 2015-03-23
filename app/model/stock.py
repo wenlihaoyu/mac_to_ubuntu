@@ -1,0 +1,4 @@
+
+
+class stock(basicAsset):
+    pass

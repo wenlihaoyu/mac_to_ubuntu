@@ -1,0 +1,3 @@
+
+class future(basicAsset):
+    pass
