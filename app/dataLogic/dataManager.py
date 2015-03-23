@@ -1,6 +1,9 @@
 
-class dataManager(object):
+class DataManager(object):
 
+    def create():
+        pass
+    
     def update():
         pass
 
@@ -12,3 +15,5 @@ class dataManager(object):
 
     def clearAll():
         pass
+
+
