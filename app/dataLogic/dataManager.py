@@ -1,4 +1,5 @@
 
+
 class DataManager(object):
 
     def create():
@@ -7,13 +8,16 @@ class DataManager(object):
     def update():
         pass
 
-    def updateAll():
+    def delete():
         pass
 
-    def clear():
-        pass
 
-    def clearAll():
-        pass
 
+def DataManagerInstance():
+    global gdataManager
+    try:
+        gdataManager
+    except:
+        gdataManager = DataManager()
+    return gdataManager
 

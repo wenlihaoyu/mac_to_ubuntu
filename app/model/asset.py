@@ -18,6 +18,9 @@ class BasicAsset(asset):
 
     def getDataSource(self):
         pass
+
+    def getFrequence(self):
+        pass
     
     def getClose(self, from=None, to=None, freq=None):
         pass
