@@ -2,22 +2,37 @@
 
 class DataManager(object):
 
-    def create():
+    def create(self):
         pass
     
-    def update():
+    def update(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
 
+class StockDataManager(DataManager):
 
-def DataManagerInstance():
+    def create(self, symbol, name, market, comment):
+        pass
+
+    def update(self, symbol, period, from, to=None, dataset=None):
+        pass
+
+    def delete(self, symbol):
+        pass
+    
+    
+
+
+
+def DataManagerInstance(instance):
     global gdataManager
     try:
         gdataManager
     except:
-        gdataManager = DataManager()
+        if instance == 'stock':
+            gdataManager = StockDataManager()
     return gdataManager
 
