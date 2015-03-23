@@ -1,3 +1,0 @@
-
-class future(basicAsset):
-    pass

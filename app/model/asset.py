@@ -17,7 +17,15 @@ class basicAsset(asset):
 
     def getLow(self, date):
         pass
-    
 
-    
+class stock(basicAsset):
+    pass
+
+
+class future(basicAsset):
+    pass
+
+
+class option(basicAsset):
+    pass
 
