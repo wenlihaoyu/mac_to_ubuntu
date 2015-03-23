@@ -14,13 +14,13 @@ class DataManager(object):
 
 class StockDataManager(DataManager):
 
-    def create(self, symbol, name, market, comment):
+    def create(self, symbol, name, market, source, comment):
         pass
 
     def update(self, symbol, period, from, to=None, dataset=None):
         pass
 
-    def delete(self, symbol):
+    def delete(self, symbol, period):
         pass
     
     
