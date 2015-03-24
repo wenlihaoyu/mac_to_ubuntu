@@ -8,12 +8,15 @@ class Repository(object):
     def create(self):
         pass
 
+    def read(self):
+        pass
+    
     def update(self):
         pass
 
     def delete(self):
         pass
-
+    
     def save(self):
         pass
 
@@ -39,11 +42,14 @@ class MarketOrderRepository(Repository):
             self.conn.close()
             traceback.print_exc()
             sys.exit(1)
-        
+
+    def read(self):
+        pass
+            
     def update(self, order):
         pass
 
-    def delete(self):
+    def delete(self, order):
         pass
 
     def save(self):
