@@ -29,6 +29,7 @@ class MarketOrderRepository(Repository):
         except:
             self.conn.close()
             traceback.print_exc()
+            sys.exit(1)
 
     def create(self, order):
         try:
@@ -37,6 +38,7 @@ class MarketOrderRepository(Repository):
         except:
             self.conn.close()
             traceback.print_exc()
+            sys.exit(1)
         
     def update(self, order):
         pass
@@ -50,7 +52,7 @@ class MarketOrderRepository(Repository):
             self.conn.close()
         except:
             traceback.print_exc()
-
+            sys.exit(1)
 
 
     
