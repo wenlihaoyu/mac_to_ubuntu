@@ -1,6 +1,9 @@
 
 
-class BackTest(object):
+class Market(object):
+    pass
 
-    def __init__(self, strategy):
-        self.strategy = strategy
+class VirtualMarket(Market):
+    pass
+
+

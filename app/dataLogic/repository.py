@@ -6,6 +6,16 @@ from helper.util import *
 
 class Repository(object):
 
+
+    def __init__(self, database="db/finance.db"):
+        self.database = database
+        try:
+            self.conn = sqlite3.connect(self.database)
+            self.cursor = self.conn.cursor()
+        except:
+            self.conn.close()
+            traceback.print_exc()
+    
     def create(self):
         pass
 
@@ -32,16 +42,6 @@ class MarketOrderRepository(Repository):
     """
     TABLE = 'marketorder'
     DETAILTABLE = 'marketorderitem'
-    
-    def __init__(self, database="db/finance.db"):
-        self.database = database
-        try:
-            self.conn = sqlite3.connect(self.database)
-            self.cursor = self.conn.cursor()
-        except:
-            self.conn.close()
-            traceback.print_exc()
-            sys.exit(1)
 
     def create(self, order):
         """
@@ -67,7 +67,7 @@ class MarketOrderRepository(Repository):
         except:
             self.conn.close()
             traceback.print_exc()
-            sys.exit(1)
+
 
     def read(self, oid):
         """
@@ -98,13 +98,13 @@ class MarketOrderRepository(Repository):
         except:
             self.conn.close()
             traceback.print_exc()
-            sys.exit(1)
             
+                     
     def update(self, order):
         raiseNotDefined()
 
     def delete(self, order):
-        pass
+        raiseNotDefined()
 
     def save(self):
         try:
@@ -112,7 +112,49 @@ class MarketOrderRepository(Repository):
             self.conn.close()
         except:
             traceback.print_exc()
-            sys.exit(1)
+            
 
+class AccountRepository(Repository):
+    """
+    AccountRepository
+    It is used to manipulate user data
 
+    Attr:
+    """
+    TABLE = "account"
+    DETAILTABLE = "accountitem"
+
+    def create(self, uid, passwd):
+        """
+        Create a Account
+
+        Parameters:
+           order: user id
+           passwd: account password
+
+        Example:
+        >>> from dataLogic.repository import *
+        >>> ar = AccountRepository()
+        >>> account = account('0000','passwd')
+        >>> ar.create(account)
+        >>> ar.save()
+        """
+        pass
+
+    def update(self, passwd):
+        self.passwd = passwd
+
+    def delete(self, uid):
+        pass
+
+    def read(self, uid):
+        pass
+
+    def save(self):
+        pass
+
+    def updateitems(self):
+        pass
+
+    
     
