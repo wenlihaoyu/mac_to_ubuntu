@@ -9,7 +9,7 @@ class Account:
         string = "User id: %s\nSymbol: %s\n" %(self.uid, self.name)
         for item in self.items:
             string += item.__str__()
-        return "User id: %s\nPassword: %s\n" %(self.uid, self.passwd)
+        return string
 
 class AccountItem:
     def __init__(self, uid, symbol, avgcost, num):
