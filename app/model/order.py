@@ -1,4 +1,5 @@
 #from helper.util import raiseNotDefined
+from uuid import uuid1
 
 class Order(object):
     pass
@@ -13,13 +14,16 @@ class MarketOrder(object):
        #price: price for trading
        #num: number for trading
     """
-    def __init__(self, oid, uid, timestamp, strategy, items):
-        self.oid = oid
+    def __init__(self, uid, timestamp, strategy):
+        self.oid = uuid1()
         self.uid = uid
         self.timestamp = timestamp
         self.strategy = strategy
-        self.items = items
+        self.items = []
         
+    def addOrderItem(self, symbol, price, num):
+        self.items.append(MarketOrderItem(uuid1(), self.oid, symbol, price, num)) 
+    
     def __str__(self):
         string = "OrderId: %s\nTimestamp: %s\nStrategy: %s\n\n" %(self.oid, self.timestamp, self.strategy)
         for item in self.items:

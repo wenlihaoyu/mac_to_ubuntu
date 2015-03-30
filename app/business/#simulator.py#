@@ -1,13 +1,12 @@
-
+from helper.util import *
 
 class BaseMarket(object):
     pass
 
 class VirtualMarket(Market):
-    def __init__(self, agent, database="db/finance.db"):
+    def __init__(self, agent):
         # account register
         # load asset data
-        self.database = database
         self.agent = agent
 
     def __load_assets(self):

@@ -1,8 +1,8 @@
 
-create table marketorder (oid varchar(10), uid varchar(10), timestamp varchar(20), strategy varchar(20));
+create table marketorder (oid varchar primary key, uid varchar, timestamp varchar, strategy varchar);
 
-create table marketorderitem (id varchar(10), oid varchar(10), symbol varchar(10), price real, num int);
+create table marketorderitem (id varchar primary key, oid varchar, symbol varchar, price real, num int);
 
-create table account (uid varchar(10), passwd varchar(20));
+create table account (uid varchar primary key, passwd varchar);
 
-create table accountitem (uid varchar(10), symbol varchar(10), avgcost real, num int);
+create table accountitem (uid varchar, symbol varchar, avgcost real, num int);

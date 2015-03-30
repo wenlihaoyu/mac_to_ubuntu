@@ -1,8 +1,8 @@
 import sqlite3
-import sys
 import traceback
 from model.order import *
 from helper.util import *
+from uuid import uuid1
 
 class Repository(object):
 
@@ -53,8 +53,9 @@ class MarketOrderRepository(Repository):
         Example:
         >>> from dataLogic.repository import *
         >>> mr = MarketOrderRepository()
-        >>> orderitems = [MarketOrderItem('111', '123', 'AAPL', 20.0, 300)]
-        >>> order = MarketOrder('123', 'xxb', '20:08:00', 'arbitrage', orderitems)
+        >>> order = MarketOrder('xxb', '20:08:00', 'arbitrage')
+        >>> order.addOrderItem('AAPL', 20.0, 300)
+        >>> order.addOrderItem('QY', 10.0, -400)
         >>> mr.create(order)
         >>> mr.save()
         """
