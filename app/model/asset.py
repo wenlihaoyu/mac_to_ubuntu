@@ -12,14 +12,18 @@ class Asset(object):
     pass
 
 class BasicAsset(asset):
-
-    def getSymbol(self):
-        pass
+    def __init__(self):
+        
+        
+    
+        
+    def getSymbol(self)
+        
 
     def getDataSource(self):
-        pass
+        
 
-    def getFrequence(self):
+    def getPeriod(self):
         pass
     
     def getClose(self, from=None, to=None, freq=None):
