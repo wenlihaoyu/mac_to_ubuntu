@@ -282,10 +282,11 @@ class AccountRepository(Repository):
     #def read(self, uid):
         
 
-    #def save(self):
+    def save(self):
+        self.conn.close()
         
 
-    def updateitems(self,uid):
+    def updateavgcost(self,uid):
         sql="select distinct symbol from marketorder t1 join marketorderitem t2 on t1.oid=t2.oid where uid='%s' ;"%uid
         try:
             symbols=self.cursor.execute(sql).fetchall()
@@ -299,11 +300,13 @@ class AccountRepository(Repository):
                     num+=int(data[i][2])
                 self.accountitem=AccountItem(uid, symbol, avgcost, num)
                 ###update the data in database
-                sql="update %s set avgcost=%f and num=%d;"%(accountitem,avgcost,num)
+                sql="update %s set avgcost=%f and num=%d;"%(DETAILTABLE,avgcost,num)
                 self.cursor.execute(sql)
                 self.conn.commit()
         except:
             self.conn.close()
+    def updateitems(self,uid):
+         pass
         
         
 

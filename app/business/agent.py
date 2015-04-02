@@ -3,9 +3,9 @@ from model.order import *
 from dataLogic.repository import *
 
 class BaseAgent(object):
-    def __init__(self, account, database):
+    def __init__(self, uid,passwd, database):
         self.database = database
-        self.account = account
+        self.account = Account(uid,passwd)
 
     def openPosition(self):
         raiseNotDefined()
@@ -29,8 +29,8 @@ class BaseAgent(object):
         raiseNotDefined()
 
 class DemoAgent(BaseAgent):
-    def __init__(self, account, database):
-        super(DemoAgent, self).__init__(account, database)
+    def __init__(self, uid,passwd, database):
+        super(DemoAgent, self).__init__(uid,passwd, database)
         self.repository = MarketOrderRepository(database)
 
     def openPosition(self):
