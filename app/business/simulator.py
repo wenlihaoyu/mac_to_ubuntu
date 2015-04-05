@@ -1,4 +1,5 @@
 from dataLogic.repository import *
+from model.order import *
 import sqlite3
 class BaseMarket(object):
     pass
@@ -20,6 +21,11 @@ class VirtualMarket(Market):
     
 
     def run_by_step(self，period='day'):
+        LOCAL_TABLE_NAME={'5min':'stock_5min','15min':'stock_15min','30min':'stock_30min','60min':'stock_60min','day':'stock_day' ,'week':'stock_week','month':'stock_month','year':'stock_year'}
+        stock_period=LOCAL_TABLE_NAME[period]
+        sql="select * from %s where Date='%';"%(stock_period,t)
+        ### get the current all stocks record
+        data=self.cursor.execute(sql).fetchall()
         pass
 
     
@@ -29,32 +35,49 @@ class simulation:
         self.agent={}
         #self.account={}
           pass
-    def create_account(self,uid,passwd):
+    #def create_account(self,uid,passwd):
         #self.account[uid]=passwd
         #self.account=Account(uid,passwd)
         #self.DemoAgent=DemoAgent(self.account,self.database)
-        self.AccountRepository=AccountRepository(self.database)
-        self.AccountRepository.create(uid,passwd)
-        self.AccountRepository.save()
+        #   self.AccountRepository=AccountRepository(self.database)
+        #self.AccountRepository.create(uid,passwd)
+       #self.AccountRepository.save()
     def set_bassagent(self,TABLE,detailTABLE):
+        ##TABLE is accout,detailTable is accountdeatail
         def get_uid(database,TABLE):
             users=[]
             try:
                 conn=sqlite3.connect(self.database)
                 cursor=conn.cursor()
-                sql="select uid ,passwd from %s;"#TABLE
-                users=cursor.commit(sql).fetchall()
+                sql="select uid ,passwd from %s;"%ABLE
+                u_id=cursor.commit(sql).fetchall()
                 conn.close()
             except:
                 conn.close()
-            return(users)
-        users=get_uid(self.database,TABLE)
-        for user in users:
+            return(u_id)
+        uids=get_uid(self.database,TABLE)
+        for uid in uids:
             ##simulation the angent load the account
-            self.agent[user.uid]=DemoAgent(uid,passwd)
+            self.agent[uid]=DemoAgent(uid,passwd,self.database)
             ### load the
-            self.agent[user.uid].account.__str__()
-            account=Account(user.uid,user.passwd)
+            self.agent[uid].account.__str__()
+            ### openPosition
+            ### according to the stock price implementation strategy
+            self.agent[uid].strategy_data=self.agent[uid].strategy()
+            ### make order into class order and orderitem
+            ##self.agent[uid].openPosition()
+            for order in  self.agent[uid].strategy_data:
+                self.agent[uid].MarketOrderRepository=MarketOrderRepository()
+                self.agent[uid].MarketOrderRepository.create(order)
+                self.agent[uid].MarketOrderRepository.update(order)
+                self.agent[uid].MarketOrderRepository.save(order)
+            self.agent[uid].AccountRepository=AccountRepository(self.database)
+            self.agent[uid].AccountRepository.updateitems(self.uid)
+            self.agent[uid].AccountRepository.updateavgcost(self.uid)
+            self.agent[uid].AccountRepository.save()
+
+
+
 
 
 

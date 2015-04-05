@@ -12,13 +12,26 @@ class Asset(object):
     pass
 
 class BasicAsset(asset):
-    def __init__(self):
-        
-        
-    
-        
-    def getSymbol(self)
-        
+    def __init__(self,uid,database):
+       self.LOCAL_TABLE_NAME={'5min':'stock_5min','15min':'stock_15min','30min':'stock_30min','60min':'stock_60min','day':'stock_day' ,'week':'stock_week','month':'stock_month','year':'stock_year'}
+       self.database=database
+       self.uid=uid
+       try:
+          self.conn=sqlite3.connect(self.database)
+          self.cursor=self.conn.cursor()
+       except:
+          self.conn.close()
+
+    def getSymbol(self,table='account',detailtable='accountitem'):
+        symbols=[]
+        sql=" select distinct symbol from %s where uid='%s';"%(detailtable,self.uid)
+        try:
+            symbols=self.cursor.execute(sql).fetchall()
+            symbols=list(symbols)
+        except:
+            self.conn.close()
+        return symbols
+
 
     def getDataSource(self):
         

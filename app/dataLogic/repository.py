@@ -160,7 +160,14 @@ class MarketOrderRepository(Repository):
     """
     TABLE = 'marketorder'
     DETAILTABLE = 'marketorderitem'
-
+    def __init__(self,database):
+        self.database=database
+        try:
+            self.conn=sqlite3.connect(self.database)
+            self.cursor=self.conn.cursor()
+            
+        except:
+            self.conn.close()
     def create(self, order):
         """
         Create a market order
