@@ -37,9 +37,9 @@ class DemoAgent(BaseAgent):
         self.strategy_data=None
         self.MarketOrderRepository=None
         self.AccountRepository=None
-    def strategy(self):
+    def strategy(self,date,state):
         self.SolonStrategyAgent=SolonStrategyAgent(self.uid,self.database)
-        self.getAction(state)
+        self.orders=self.SolonStrategyAgent.getAction(date=date,state=state)
 
     def openPosition(self):
         raiseNotDefined()

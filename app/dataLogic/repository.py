@@ -2,6 +2,7 @@ import sqlite3
 import traceback
 import urllib.request,urllib.parse,urllib.error
 from model.order import *
+from model.account import *
 #from helper.util import *
 from uuid import uuid1
 DATABASE="db/finance.db"
@@ -99,7 +100,7 @@ class name:
         
 class Repository(object):
 
-    def __init__(self,symbol,name="",market="",source="Yahoo",comment="" ):
+    def __init__(self,symbol,name="",market="",source="Yahoo",comment="",DATABASE='db/finance.db' ):
         self.symbol=symbol
         self.name=name
         self.market=market
@@ -137,9 +138,17 @@ class Repository(object):
     def save(self):
         self.conn.close()
 
-  #  def read(self):
-        
-    
+    def read(self,date,period):
+        if period in self.LOCAL_TABLE_NAME:
+           table_name=self.LOCAL_TABLE_NAME[period]
+        else:
+           return 0
+        sql="select symbol,date,open,high,low,close,volume,adj_close from %s where symbol='%s' and date='%s'"%(table_name,self.symbol,date)
+        try:
+            data=self.cursor.execute(sql).fetchall()
+        except:
+            self.conn.close()
+#symbol text ,Date text, Open real,High real ,Low real,Close real,Volume integer, #Adj_close real
    # def update(self):
         
 
@@ -272,7 +281,7 @@ class AccountRepository(Repository):
         >>> ar.save()
         """
         self.account=Account(uid, passwd)
-        sql="insert into %s values('%s','%s');"%(TABLE,self.account.uid,self.account.passwd)
+        sql="insert into %s values('%s','%s');"%(self.TABLE,self.account.uid,self.account.passwd)
         try:
             self.cursor.execute(sql)
             self.conn.commit()
@@ -305,9 +314,9 @@ class AccountRepository(Repository):
                 num=0
                 for i in range(len(data)):
                     num+=int(data[i][2])
-                self.accountitem=AccountItem(uid, symbol, avgcost, num)
+            #self.accountitem=AccountItem(uid, symbol, avgcost, num)
                 ###update the data in database
-                sql="update %s set avgcost=%f and num=%d;"%(DETAILTABLE,avgcost,num)
+                sql="update %s  set avgcost=%f and num=%d where symbol='%s' and uid ='%s';"%(self.DETAILTABLE,avgcost,num,symbol,uid)
                 self.cursor.execute(sql)
                 self.conn.commit()
         except:
