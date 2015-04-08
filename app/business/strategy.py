@@ -1,5 +1,5 @@
-from helper.util import raiseNotDefined
-from model.BasicAsset import *
+#from helper.util import raiseNotDefined
+from model.asset import *
 from model.order import *
 from dataLogic.repository import *
 from random import choice
@@ -28,27 +28,28 @@ class SolonStrategyAgent(StrategyAgent):
        
         self.Symbols=self.BasicAsset.getSymbol()
         self.BasicAsset.save()
-    def getAction(self, date,flag="database",state):
+    def getAction(self,date,flag,state):
         self.order=[]
         self.price={}
+        orders=None
         if flag=="database":
             for symbol in self.Symbols:
-                self.Repository=Repository(symbol,DATABASE=self.database)
-                self.price[symbol]=list(self.Repository.read(date,period='day'))
+                self.Repository=Repository(symbol[0],DATABASE=self.database)
+                self.price[symbol[0]]=list(self.Repository.read(date,period='day'))
                 self.Repository.save()
                 self.Repository=None
         else:
                         #state=='url'
          ###get the stock price from url
             for symbol in self.Symbols:
-                self.stock=stock(symbol=symbol,begin=date,to=date,period='day')
-                self.price[symbol]=[symbol]
-                self.price[symbol].extend(self.get_from_url())
+                self.stock=stock(symbol=symbol[0],begin=date,to=date,period='day')
+                self.price[symbol[0]]=[symbol[0]]
+                self.price[symbol[0]].extend(self.get_from_url())
                 self.stock=None
                     ##if state=='buy':
         for symbol in self.Symbols:
                 orders=MarketOrder(uid=self.uid,timestamp=date,strategy=state)
-                orders.addOrderItem(symbol=symbol,price=float(self.price[symbol][7]),num=choice(range(1,100)*100))
+                orders.addOrderItem(symbol=symbol[0],price=float(self.price[symbol[0]][0][7]),num=choice(range(1,100))*100)
         return orders
 
     def predict(self):

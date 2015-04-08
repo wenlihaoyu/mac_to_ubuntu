@@ -1,7 +1,8 @@
-from helper.util import *
+#from helper.util import *
 from model.order import *
 from dataLogic.repository import *
-
+from random import choice
+from business.strategy import *
 class BaseAgent(object):
     def __init__(self, uid,passwd, database):
         self.database = database
@@ -32,14 +33,16 @@ class DemoAgent(BaseAgent):
     def __init__(self, uid,passwd, database):
         super(DemoAgent, self).__init__(uid,passwd, database)
         self.repository = MarketOrderRepository(database)
-        self.strategy=None
         self.order=None
+        self.uid=uid
+        self.passwd=passwd
+        self.database=database
         self.strategy_data=None
         self.MarketOrderRepository=None
         self.AccountRepository=None
-    def strategy(self,date,state):
+    def strategy(self,date):
         self.SolonStrategyAgent=SolonStrategyAgent(self.uid,self.database)
-        self.orders=self.SolonStrategyAgent.getAction(date=date,state=state)
+        self.orders=self.SolonStrategyAgent.getAction(date=date,flag="database",state=choice(["buy","sell"]))
 
     def openPosition(self):
         raiseNotDefined()

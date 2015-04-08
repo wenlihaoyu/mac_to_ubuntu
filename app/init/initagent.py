@@ -27,14 +27,16 @@ class init:
         conn.close()
     def init_agent_table(self):
         for key in self.uid:
-            orders=MarketOrder(self.uid[key],'1990-01-01',strategy=sample(['sell','buy'],1))
+            orders=MarketOrder(self.uid[key],"1990-01-01",strategy=sample(["sell","buy"],1)[0])
             for symbol in self.symbol[self.uid[key]]:
                     orders.addOrderItem(symbol,0,0)
             self.MarketOrderRepository=MarketOrderRepository(self.database)
             self.MarketOrderRepository.create(orders)
             self.MarketOrderRepository.save()
+        for key in self.uid:
             self.AccountRepository=AccountRepository(self.database)
-            self.AccountRepository.create(self.uid[key],"key")
+            self.AccountRepository.create(self.uid[key],self.uid[key])
+            self.AccountRepository.insert(self.uid[key])
             self.AccountRepository.updateavgcost(self.uid[key])
             self.AccountRepository.save()
 def initial():

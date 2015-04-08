@@ -6,12 +6,12 @@ _ONE_DAY='1D'
 _ONE_WEEK='1W'
 _ONE_MONTH='1Mon'
 _ONE_YEAR='1Y'
-
+import sqlite3
 
 class Asset(object):
     pass
 
-class BasicAsset(asset):
+class BasicAsset(Asset):
     def __init__(self,uid,database):
        self.LOCAL_TABLE_NAME={'5min':'stock_5min','15min':'stock_15min','30min':'stock_30min','60min':'stock_60min','day':'stock_day' ,'week':'stock_week','month':'stock_month','year':'stock_year'}
        self.database=database
@@ -34,49 +34,51 @@ class BasicAsset(asset):
 
 
     def getDataSource(self):
-        
+        pass
 
     def getPeriod(self):
         pass
     
-    def getClose(self, from=None, to=None, freq=None):
+    def getClose(self, begin=None, to=None, freq=None):
         pass
 
-    def getOpen(self, from=None, to=None, freq=None):
+    def getOpen(self, begin=None, to=None, freq=None):
         pass
 
-    def getHigh(self, from=None, to=None, freq=None):
+    def getHigh(self, begin=None, to=None, freq=None):
         pass
 
-    def getLow(self, from=None, to=None, freq=None):
+    def getLow(self, begin=None, to=None, freq=None):
         pass
 
-    def get5Min(self, from=None, to=None, source=None):
+    def get5Min(self, begin=None, to=None, source=None):
         pass
 
-    def get15Min(self, from=None, to=None, source=None):
+    def get15Min(self, begin=None, to=None, source=None):
         pass
 
-    def get30Min(self, from=None, to=None, source=None):
+    def get30Min(self, begin=None, to=None, source=None):
         pass
 
-    def get1Hour(self, from=None, to=None, source=None):
+    def get1Hour(self, begin=None, to=None, source=None):
         pass
 
-    def get1Day(self, from=None, to=None, source=None):
+    def get1Day(self, begin=None, to=None, source=None):
         pass
 
-    def get1Week(self, from=None, to=None, source=None):
+    def get1Week(self, begin=None, to=None, source=None):
         pass
 
-    def get1Month(self, from=None, to=None, source=None):
+    def get1Month(self, begin=None, to=None, source=None):
         pass
 
-    def get1Year(self, from=None, to=None, source=None):
+    def get1Year(self, begin=None, to=None, source=None):
         pass
 
     def validate(self):
         pass
+    def save(self):
+        self.conn.close()
 
 class Stock(BasicAsset):
     pass

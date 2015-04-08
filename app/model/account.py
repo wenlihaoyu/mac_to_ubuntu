@@ -4,12 +4,12 @@ class Account:
         self.uid = uid
         self.passwd = passwd
         self.items = items
-    
-    def __str__(self):
-        string = "User id: %s\nSymbol: %s\n" %(self.uid, self.name)
-        for item in self.items:
-            string += item.__str__()
-        return string
+        self.name=" "
+        #def __str__(self):
+        #string = "User id: %s\nSymbol: %s\n" %(self.uid, self.name)
+        #for item in self.items:
+        #   string += item.__str__()
+#return string
 
 class AccountItem:
     def __init__(self, uid, symbol, avgcost, num):
@@ -55,4 +55,4 @@ def cumpute(data):
                 j+=1
     #print m_average
     #print m_total
-    return  m_average/1.0/m_total
+    return  m_average

@@ -139,6 +139,7 @@ class Repository(object):
         self.conn.close()
 
     def read(self,date,period):
+        data=None
         if period in self.LOCAL_TABLE_NAME:
            table_name=self.LOCAL_TABLE_NAME[period]
         else:
@@ -148,6 +149,7 @@ class Repository(object):
             data=self.cursor.execute(sql).fetchall()
         except:
             self.conn.close()
+        return data
 #symbol text ,Date text, Open real,High real ,Low real,Close real,Volume integer, #Adj_close real
    # def update(self):
         
@@ -156,7 +158,7 @@ class Repository(object):
         
     
     #def save(self):
-        
+
 
     
 class MarketOrderRepository(Repository):
@@ -194,11 +196,13 @@ class MarketOrderRepository(Repository):
         >>> mr.save()
         """
         try:
-            insertOrder = """insert into %s values('%s','%s', '%s', '%s');""" %(MarketOrderRepository.TABLE, order.oid, order.uid, order.timestamp,  order.strategy)
+            insertOrder = "insert into %s values('%s','%s','%s','%s');" %(MarketOrderRepository.TABLE, str(order.oid), str(order.uid), str(order.timestamp),  str(order.strategy))
             for item in order.items:
-                insertItems = """insert into %s values('%s', '%s', '%s', %s, %s); """ %(MarketOrderRepository.DETAILTABLE, item.id, item.oid, item.symbol, item.price, item.num)
+                insertItems = "insert into %s values('%s', '%s', '%s', %f,%d);" %(MarketOrderRepository.DETAILTABLE, item.id, item.oid, item.symbol, item.price, item.num)
                 self.cursor.execute(insertItems)
+                self.conn.commit()
             self.cursor.execute(insertOrder)
+            self.conn.commit()
         except:
             self.conn.close()
             traceback.print_exc()
@@ -228,7 +232,7 @@ class MarketOrderRepository(Repository):
                 orderitem = MarketOrderItem(item[0], item[1], item[2], item[3], item[4])
                 orderItems.append(orderitem)
             order = MarketOrder(orderRecord[0], orderRecord[1], orderRecord[2], orderRecord[3], orderItems)
-            self.conn.close()
+            #self.conn.close()
             return order
         except:
             self.conn.close()
@@ -287,8 +291,22 @@ class AccountRepository(Repository):
             self.conn.commit()
         except:
             self.conn.close()
-        
-          
+    def insert(self,uid):
+        sql="select distinct symbol from marketorder t1 join marketorderitem t2 on t1.oid=t2.oid where uid='%s' ;"%uid
+        #uid varchar, symbol varchar, avgcost real, num int
+        try:
+            symbols=self.cursor.execute(sql).fetchall()
+            for symbol in symbols:
+                #self.accountitem=AccountItem(uid, symbol, avgcost, num)
+                ###update the data in database
+                sql="insert into %s values('%s','%s',%f,%d);"%('accountitem',uid,symbol[0],0,0)
+                self.cursor.execute(sql)
+                self.conn.commit()
+        except:
+            self.conn.close()
+
+
+
     def update(self, passwd):
         self.passwd = passwd
 
