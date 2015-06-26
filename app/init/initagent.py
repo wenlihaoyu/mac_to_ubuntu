@@ -1,15 +1,21 @@
 import sqlite3
 from  random import sample
 from dataLogic.repository import *
+from dataLogic.loading import *
 from model.order import *
 class init:
-    def __init__(self,agentnum=10,database='db/finance.db'):
-        self.agentnum=agentnum
+    def __init__(self,database='db/finance.db'):
         self.database=database
-        self.symbol={}
+    def create_table(self):
+         x=init_table(database)
+         x.create_table()
+         x.save()
+    def load_data(self,begin,to,period="day"):
+        x=load(self.database)
+        x.load(begin,to,period)
+        x.save()
     def init_agent_num(self):
         uid={}
-
         for i in range(self.agentnum):
             uid[i]=str(i)
         self.uid=uid
@@ -46,5 +52,12 @@ def initial():
     x.init_agent_table()
 
 
-
-
+class users:
+    def __init__(self,uid,passwd,comment=" "):
+        self.uid=uid
+        self.passwd=passwd
+        self.comment=comment
+    def __str__(self):
+        string="uid:%s\npasswd:   \ncomment:%s"%(self.uid,self.comment)
+        return string
+        

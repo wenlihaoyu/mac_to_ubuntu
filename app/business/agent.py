@@ -4,9 +4,8 @@ from dataLogic.repository import *
 from random import choice
 from business.strategy import *
 class BaseAgent(object):
-    def __init__(self, uid,passwd, database):
+    def __init__(self, user, database):
         self.database = database
-        self.account = Account(uid,passwd)
 
     def openPosition(self):
         raiseNotDefined()
@@ -30,12 +29,13 @@ class BaseAgent(object):
         raiseNotDefined()
 
 class DemoAgent(BaseAgent):
-    def __init__(self, uid,passwd, database):
-        super(DemoAgent, self).__init__(uid,passwd, database)
+    def __init__(self, user, database):
+       # super(DemoAgent, self).__init__(user.uid, database)
         self.repository = MarketOrderRepository(database)
+        self.database=database
         self.order=None
-        self.uid=uid
-        self.passwd=passwd
+        self.uid=user.uid
+        self.passwd=user.passwd
         self.database=database
         self.strategy_data=None
         self.MarketOrderRepository=None

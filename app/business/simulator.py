@@ -26,9 +26,9 @@ class VirtualMarket(BaseMarket):
              return 0
          self.date=date
     def run_by_step(self,period='day'):
-        for t in self.date[range(self.n)]:
+        for t in list(range(self.n)):
             x=simulation('db/finance.db')
-            x.set_bassagent('account',"accountitem",'2013-03-15')
+            x.set_bassagent('account',"accountitem",self.date[t])
 
 class simulation:
     def __init__(self,database):

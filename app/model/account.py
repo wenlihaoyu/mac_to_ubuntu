@@ -1,15 +1,16 @@
 
 class Account:
-    def __init__(self, uid, passwd, items=None):
-        self.uid = uid
-        self.passwd = passwd
+    def __init__(self, user, items=None):
+        ###class uesr uid,passwd,comment
+        self.uid = user.uid
+        self.passwd = user.passwd
         self.items = items
-        self.name=" "
-        #def __str__(self):
-        #string = "User id: %s\nSymbol: %s\n" %(self.uid, self.name)
-        #for item in self.items:
-        #   string += item.__str__()
-#return string
+    def __str__(self):
+        string = "User id: %s\nSymbol: %s\n" %(self.uid)
+        if self.items!=None:        
+            for item in self.items:
+                string += item.__str__()
+        return string
 
 class AccountItem:
     def __init__(self, uid, symbol, avgcost, num):
@@ -18,7 +19,8 @@ class AccountItem:
         self.num = num
         self.avgcost=avgcost
     def __str__(self):
-        return "User id: %s\nSymbol: %s\nAverage Cost: \s\nNum: %s\n" %(self.uid, self.symbol, self.avgcost, self.num)
+        string="User id: %s\nSymbol: %s\nAverage Cost: \s\nNum: %s\n" %(self.uid, self.symbol, self.avgcost, self.num)
+        return string
 def cumpute(data):
     i=0
     j=0
